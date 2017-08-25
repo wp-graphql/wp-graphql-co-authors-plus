@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name: GraphQL integration with Co-Authors Plus
- * Author: Quartz, Chris Zarate
+ * Author: WPGraphQL
  * Version: 0.0.1
  * Requires at least: 4.7.0
  *
@@ -52,7 +52,10 @@ class WPGraphQL_CoAuthorsPlus {
 	}
 
 	/**
-	 * Hook into GraphQL actions and filters to ....
+	 * Hook into GraphQL actions and filters.
+	 *
+	 * @return void
+	 * @since 0.0.1
 	 */
 	public function init() {
 		add_filter( 'graphql_coAuthor_fields', array( $this, 'add_fields' ), 10, 1 );
