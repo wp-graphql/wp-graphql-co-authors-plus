@@ -24,24 +24,24 @@ class WPGraphQL_CoAuthorsPlus {
 	 *
 	 * @var array
 	 */
-	 private $fields = array(
-		 'email' => 'user_email',
-		 'firstName' => 'first_name',
-		 'lastName' => 'last_name',
-		 'name' => 'display_name',
-		 'registeredDate' => 'user_registered',
-		 'slug' => 'user_nicename',
-		 'type' => 'type',
-		 'url' => 'user_url',
-		 'username' => 'user_login',
-	 );
+	private $fields = array(
+		'email' => 'user_email',
+		'firstName' => 'first_name',
+		'lastName' => 'last_name',
+		'name' => 'display_name',
+		'registeredDate' => 'user_registered',
+		'slug' => 'user_nicename',
+		'type' => 'type',
+		'url' => 'user_url',
+		'username' => 'user_login',
+	);
 
 	/**
 	 * Text domain slug for this plugin.
 	 *
 	 * @var string
 	 */
-	 private $textdomain = 'wp-graphql-coauthors-plus';
+	private $textdomain = 'wp-graphql-coauthors-plus';
 
 	/**
 	 * Constructor.
@@ -104,10 +104,10 @@ class WPGraphQL_CoAuthorsPlus {
 	 * on the user object.
 	 *
 	 * @SuppressWarnings(PHPMD.UnusedFormalParameter)
-	 * @param  WP_Term     $term    Co-author taxonomy term
-	 * @param  array       $args    Query args
-	 * @param  AppContext  $context AppContext object
-	 * @param  ResolveInfo $info    ResolveInfo object
+	 * @param  \WP_Term    $term    Co-author taxonomy term.
+	 * @param  array       $args    Query args.
+	 * @param  AppContext  $context AppContext object.
+	 * @param  ResolveInfo $info    ResolveInfo object.
 	 * @return string
 	 * @since 0.0.1
 	 */
@@ -134,7 +134,7 @@ class WPGraphQL_CoAuthorsPlus {
 	/**
 	 * Update the Co-Authors Plus taxonomy args to support GraphQL.
 	 *
-	 * @param array $args Associative array of taxonomy args.
+	 * @param array  $args Associative array of taxonomy args.
 	 * @param string $taxonomy Taxonomy name.
 	 *
 	 * @return array
