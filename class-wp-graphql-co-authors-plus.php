@@ -47,7 +47,7 @@ class WPGraphQL_CoAuthorsPlus {
 	 * Constructor.
 	 */
 	public function __construct() {
-		add_action( 'register_taxonomy_args', array( $this, 'update_taxonomy_args' ), 10, 2 );
+		add_filter( 'register_taxonomy_args', array( $this, 'update_taxonomy_args' ), 10, 2 );
 		add_action( 'graphql_init', array( $this, 'init' ), 10, 0 );
 	}
 
