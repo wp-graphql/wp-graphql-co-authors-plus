@@ -152,3 +152,6 @@ class WPGraphQL_CoAuthorsPlus {
 		return $args;
 	}
 }
+
+// Instantiate the class.
+new \WPGraphQL\WPGraphQL_CoAuthorsPlus();
