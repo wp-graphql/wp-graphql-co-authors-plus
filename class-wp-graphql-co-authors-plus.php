@@ -2,7 +2,7 @@
 /**
  * Plugin Name: GraphQL integration with Co-Authors Plus
  * Author: WPGraphQL
- * Version: 0.0.1
+ * Version: 0.0.2
  * Requires at least: 4.7.0
  *
  * @package WPGraphQL_CoAuthorsPlus
@@ -37,6 +37,13 @@ class WPGraphQL_CoAuthorsPlus {
 	);
 
 	/**
+	 * CoAuthors Plus taxonomy name.
+	 *
+	 * @var string
+	 */
+	private $tax_name = 'author';
+
+	/**
 	 * Text domain slug for this plugin.
 	 *
 	 * @var string
@@ -59,6 +66,7 @@ class WPGraphQL_CoAuthorsPlus {
 	 */
 	public function init() {
 		add_filter( 'graphql_coAuthor_fields', array( $this, 'add_fields' ), 10, 1 );
+		add_filter( 'graphql_term_object_connection_query_args', array( $this, 'set_default_args' ), 10, 3 );
 	}
 
 	/**
@@ -82,6 +90,33 @@ class WPGraphQL_CoAuthorsPlus {
 		}
 
 		return $fields;
+	}
+
+	/**
+	 * Set default args for get_terms on post connections.
+	 *
+	 * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+	 * @param  array   $query_args Args to be passed to get_terms.
+	 * @param  WP_Post $source     Connection source (post object).
+	 * @param  array   $args       Input args.
+	 * @return array
+	 * @since 0.0.2
+	 */
+	public function set_default_args( $query_args, $source, $args ) {
+		if ( ! isset( $query_args['taxonomy'] ) || $this->tax_name !== $query_args['taxonomy'] ) {
+			return $query_args;
+		}
+
+		// If the query is requesting a specific order, don't override it.
+		if ( isset( $args['where']['orderby'] ) ) {
+			return $query_args;
+		}
+
+		// The default sort order for CAP is "term_order"; this preserves the
+		// order set by the post author. See co-authors-plus.php#L1564.
+		$query_args['orderby'] = 'term_order';
+
+		return $query_args;
 	}
 
 	/**
@@ -141,9 +176,7 @@ class WPGraphQL_CoAuthorsPlus {
 	 * @since 0.0.1
 	 */
 	public function update_taxonomy_args( $args, $taxonomy ) {
-		$tax_name = apply_filters( 'coauthors_taxonomy_name', 'author' );
-
-		if ( $tax_name === $taxonomy ) {
+		if ( $this->tax_name === $taxonomy ) {
 			$args['show_in_graphql'] = true;
 			$args['graphql_single_name'] = 'coAuthor';
 			$args['graphql_plural_name'] = 'coAuthors';
